@@ -17,8 +17,7 @@ public class OnibusHttpServer {
     ServerSocket serverSocket = new ServerSocket(8080);
     ArrayList<Assento> assentos = new ArrayList<>();
     final int qtdDeAssentos = 32;
-    final File logFile = new File(".\\logs\\log1.txt");
-	logFile.getParentFile().mkdirs();
+    final File logFile = new File("logs", "log.txt");
     final ArrayList<String> log = new ArrayList<>();
 
     public static void main(String[] args) throws IOException { new OnibusHttpServer(); }
@@ -119,8 +118,8 @@ public class OnibusHttpServer {
                             assento.dataHora = LocalDateTime.now();
                             status = "sucesso";
 							log.add(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro + "\n");
-							fileWriter = new FileWriter(logFile)
-							fileWriter.append(log)
+							fileWriter = new FileWriter(logFile);
+							fileWriter.append(log);
 							fileWriter.flush();
                         }
                     }
