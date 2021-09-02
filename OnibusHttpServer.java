@@ -17,9 +17,8 @@ public class OnibusHttpServer {
     ServerSocket serverSocket = new ServerSocket(8080);
     ArrayList<Assento> assentos = new ArrayList<>();
     final int qtdDeAssentos = 32;
-
-	final File dir = new File("logs").mkdir()
-    final File logFile = new File(dir, "log.txt");
+    final File logFile = new File("logs\\log.txt");
+	logFile.getParentFile().mkdirs();
     final ArrayList<String> log = new ArrayList<>();
 
     public static void main(String[] args) throws IOException { new OnibusHttpServer(); }
