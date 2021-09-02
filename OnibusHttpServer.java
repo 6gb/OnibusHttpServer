@@ -19,7 +19,7 @@ public class OnibusHttpServer {
     final int qtdDeAssentos = 32;
 
     final File logFile = new File("log.txt");
-    final ArrayList<String> ips = new ArrayList<>();
+    final ArrayList<String> log = new ArrayList<>();
 
     public static void main(String[] args) throws IOException { new OnibusHttpServer(); }
 
@@ -48,15 +48,15 @@ public class OnibusHttpServer {
             try { fileWriter = new FileWriter(logFile); }
             catch (IOException e) { e.printStackTrace(); }
 
-            synchronized (ips) {
+            synchronized (log) {
                 try {
-                    if (ips.size() == 0) { ips.wait(); }
-                    for (String i: ips)
+                    if (log.size() == 0) { log.wait(); }
+                    for (String l: log)
                         if (fileWriter != null) {
-                            fileWriter.append(i).append("\n");
+                            fileWriter.append(l).append("\n");
                             fileWriter.flush();
                         }
-                    if (ips.size() == qtdDeAssentos - 1) { ips.notify(); }
+                    if (log.size() == qtdDeAssentos - 1) { log.notify(); }
                 } catch (InterruptedException | IOException e) { e.printStackTrace(); }
             }
         }
@@ -141,20 +141,7 @@ public class OnibusHttpServer {
                             assento.nomeDoPassageiro = nome[1].replace("+"," ");
                             assento.dataHora = LocalDateTime.now();
                             status = "sucesso";
-                        }
-                    }
-
-                    for (String s : line) {
-                        if (s.matches("^x-forwarded-for")) {
-                            String[] ip = s.split(":");
-
-                            synchronized (ips) {
-                                try {
-                                    if (ips.size() == qtdDeAssentos) { ips.wait(); }
-                                    ips.add(ip[1]);
-                                    if (ips.size() == 1){ ips.notify(); }
-                                } catch (InterruptedException e) { e.printStackTrace(); }
-                            } break;
+							log.add(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro);
                         }
                     }
                 }
