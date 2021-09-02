@@ -1,6 +1,8 @@
-FROM debian:stable-slim
-COPY . /usr/src/ohs
-WORKDIR /usr/src/ohs
+FROM openjdk:8-jdk-alpine
+COPY . /OnibusHttpServer
+WORKDIR /OnibusHttpServer
 EXPOSE 8080
-RUN apt-get update && apt-get install default-jre git && git clone https://github.com/6gb/OnibusHttpServer
+RUN apk add git
+RUN git clone https://github.com/6gb/OnibusHttpServer
+RUN javac OnibusHttpServer.java
 CMD ["java", "OnibusHttpServer"]
