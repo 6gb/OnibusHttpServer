@@ -118,7 +118,7 @@ public class OnibusHttpServer {
                             assento.dataHora = LocalDateTime.now();
                             status = "sucesso";
 							log.add(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro + "\n");
-							fileWriter = new FileWriter(logFile);
+							FileWriter fileWriter = new FileWriter(logFile);
 							fileWriter.append(log);
 							fileWriter.flush();
                         }
