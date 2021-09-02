@@ -31,34 +31,11 @@ public class OnibusHttpServer {
             assentos.add(assento);
         }
 
-        new Thread(new LogWriter()).start();
-
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
                 new Thread(new Guiche(socket)).start();
             } catch (Exception e) { e.printStackTrace(); }
-        }
-    }
-
-    private class LogWriter implements Runnable {
-        @Override
-        public void run() {
-            FileWriter fileWriter = null;
-            try { fileWriter = new FileWriter(logFile); }
-            catch (IOException e) { e.printStackTrace(); }
-
-            synchronized (log) {
-                try {
-                    if (log.size() == 0) { log.wait(); }
-                    for (String l: log)
-                        if (fileWriter != null) {
-                            fileWriter.append(l).append("\n");
-                            fileWriter.flush();
-                        }
-                    if (log.size() == qtdDeAssentos - 1) { log.notify(); }
-                } catch (InterruptedException | IOException e) { e.printStackTrace(); }
-            }
         }
     }
 
@@ -141,7 +118,10 @@ public class OnibusHttpServer {
                             assento.nomeDoPassageiro = nome[1].replace("+"," ");
                             assento.dataHora = LocalDateTime.now();
                             status = "sucesso";
-							log.add(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro);
+							log.add(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro + "\n");
+							fileWriter = new FileWriter(logFile)
+							fileWriter.append(log)
+							fileWriter.flush();
                         }
                     }
                 }
