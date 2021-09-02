@@ -1,5 +1,3 @@
-package OnibusHttpServer;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,7 +14,7 @@ public class OnibusHttpServer {
         LocalDateTime dataHora;
     }
 
-    ServerSocket serverSocket = new ServerSocket(88);
+    ServerSocket serverSocket = new ServerSocket(8080);
     ArrayList<Assento> assentos = new ArrayList<>();
     final int qtdDeAssentos = 32;
 
