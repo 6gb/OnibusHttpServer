@@ -18,7 +18,8 @@ public class OnibusHttpServer {
     ArrayList<Assento> assentos = new ArrayList<>();
     final int qtdDeAssentos = 32;
 
-    final File logFile = new File("logs", "log.txt");
+	final File dir = new File("logs").mkdir()
+    final File logFile = new File(dir, "log.txt");
     final ArrayList<String> log = new ArrayList<>();
 
     public static void main(String[] args) throws IOException { new OnibusHttpServer(); }
