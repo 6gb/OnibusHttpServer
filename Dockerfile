@@ -1,4 +1,5 @@
 FROM openjdk:8-alpine
+WORKDIR /OnibusHttpServer
 ENTRYPOINT /OnibusHttpServer
 EXPOSE 8080
 RUN apk add git
