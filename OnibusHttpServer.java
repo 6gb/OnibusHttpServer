@@ -18,6 +18,7 @@ public class OnibusHttpServer {
     ArrayList<Assento> assentos = new ArrayList<>();
     final int qtdDeAssentos = 32;
     final File logFile = new File("logs", "log.txt");
+	FileWriter fileWriter = new FileWriter(logFile);
 
     public static void main(String[] args) throws IOException { new OnibusHttpServer(); }
 
@@ -116,7 +117,6 @@ public class OnibusHttpServer {
                             assento.nomeDoPassageiro = nome[1].replace("+"," ");
                             assento.dataHora = LocalDateTime.now();
                             status = "sucesso";
-							FileWriter fileWriter = new FileWriter(logFile);
 							fileWriter.append(assento.dataHora + " " + assento.lugar + " " + assento.nomeDoPassageiro + "\n");
 							fileWriter.flush();
                         }
