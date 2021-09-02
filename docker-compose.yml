@@ -1,0 +1,6 @@
+version:
+services:
+    web:
+        build: .
+        ports:
+            - "88:8080"
